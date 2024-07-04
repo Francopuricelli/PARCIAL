@@ -1,57 +1,5 @@
 from random import *
 
-def calcular_mayor_campo(lista,campo):
-    if len(lista) == 0: 
-        raise ValueError("no esta definido el mayor de una lista vacia")
-    maximo = lista[0]
-    for diccionarios in lista:
-        if float(diccionarios[campo]) > float(maximo[campo]):
-            maximo = diccionarios
-            
-    return maximo
-
-def calcular_menor_campo(lista,campo)->float:
-    if len(lista) == 0: 
-        raise ValueError("no esta definido el mayor de una lista vacia")
-    maximo = lista[0]
-    for diccionarios in lista:
-        if float(diccionarios[campo]) < float((maximo[campo])):
-            maximo = diccionarios
-            
-    return maximo
-
-
-def filtrar_superheroes(lista,altura):
-    lista_retorno = []
-    for el in lista:
-        if el["altura"] == altura:
-            lista_retorno.append(el)
-    return lista_retorno
-
-
-def lista_campo(lista,campo):
-    lista_retorno = []
-    for el in lista:
-        lista_retorno.append((el[campo]))
-    return lista_retorno
-
-
-def filtrar_superheroes(lista, nombre,altura):
-    lista_retorno = []
-    for el in lista:
-        if el["nombre"] == nombre:
-            lista_retorno.append(el)
-            if el["altura"] == altura:
-                lista_retorno.append(el)
-    return lista_retorno
-
-def lista_nombre_altura(lista,nombre,altura):
-    lista_retorno = []
-    for el in lista:
-        lista_retorno.append((el[nombre]))
-        lista_retorno.append((el[altura]))
-    return lista_retorno
-
 def promediar_coleccion(lista,campo): 
     """saca el promedio de una coleccion
 
@@ -72,28 +20,37 @@ def promediar_coleccion(lista,campo):
     return suma / total_iteraciones
 
 def mapear_lista(funcion,lista):
+    """mapea una lista
+
+    Args:
+        funcion (_type_): _description_
+        lista (_type_): _description_
+
+    Returns:
+        _type_: retorna una lista con las keys mapeadas anteriormente
+    """
     lista_retorno = []
     for el in lista:
         lista_retorno.append(funcion(el))
     return lista_retorno
 
 
-def filtrar_lista(funcion,lista): # GENERICA
+def filtrar_lista(funcion,lista):
+    """evalua el valor de una key
+
+    Args:
+        funcion (_type_): _description_
+        lista (_type_): _description_
+
+    Returns:
+        _type_: retorna una lista con los valores filtrados
+    """
     lista_retorno = []
     for el in lista:
         if funcion(el):
             lista_retorno.append(el)
     return lista_retorno
 
-def each_lista(funcion,lista): #  GENERICA
-    for el in lista:
-        funcion(el)
-
-def reduce_lista(funcion, lista:list)->any :
-    ant = lista[0]
-    for el in lista[1:]:
-        ant = funcion(ant, el)
-    return ant
 
 def calcular_mayor_campo_nombre(lista,campo,campo2): #campo 2 printea cualquier valor
     """Le asigna un valor al campo 1
@@ -121,6 +78,19 @@ def calcular_mayor_campo_nombre(lista,campo,campo2): #campo 2 printea cualquier 
     return nombre_maximo
 
 def calcular_menor_campo_nombre(lista,campo,campo2):
+    """Le asigna un valor al campo 1
+
+    Args:
+        lista (_type_): ingresa lista 
+        campo (_type_): campo a comparar
+        campo2 (_type_): valor a asociar al campo
+
+    Raises:
+        ValueError: _description_
+
+    Returns:
+        _type_: el nombre asociado al campo a comparar
+    """
     if len(lista) == 0: 
         raise ValueError("no esta definido el mayor de una lista vacia")
     nombre_minimo = lista[0]
@@ -144,25 +114,8 @@ def contador_lista(lista,campo):
 
     return campo
 
-def enlistar(lista,campo1,campo_agrupado)->dict:
-    #mapear lista previamente
-    campo = {}
-    for el in lista:
-        campo[el] = ""
 
-    for i in lista: #la lista cambia en base a la data.
-        for j in campo.keys():
-            if i[campo1] == j:
-                campo[j] += f"{i[campo_agrupado]} , "
 
-    return campo
-
-def randomizar(lista,campo):
-    campo_lista = {}
-    for i in lista:
-        i[campo] += randint(50,120)
-
-    return campo_lista
 
 def promediar_coleccion(lista,campo): 
     """saca el promedio de una coleccion
@@ -183,45 +136,90 @@ def promediar_coleccion(lista,campo):
 
     return promedio
 
-def calcular_promedio(lista:list)->float:
-    if isinstance(lista, list):
-        cant = len(lista)
-        if cant == 0:
-            raise ValueError("No esta definido el promedio de una lista vacia")
-        return totalizar_lista(lista) / cant
-    raise ValueError("Eso no es una lista") 
 
-def definir_campo(campo):
-    match campo:
-        case "B":
-            retorno = "BMX"
-        case "M":
-            retorno = "MTB"
-        case "P":
-            retorno = "PASEO"
-        case "p":
-            retorno = "PLAYERA"
-    return retorno
 
-def ordenar_bicis(lista,campo,asc:bool = True):
-    atributo = definir_campo
-    tam = len(lista)
-    for i in range(tam - 1):
-        for j in range(i + 1, tam):
-            if lista[i][atributo] > lista[j][atributo] if asc else lista[i][atributo] < lista[j][atributo]:
-                swap_lista(lista,i,j)
+
+def swap_lista(lista:list,i:int,j:int):
+    """swapea lugares
+
+    Args:
+        lista (list): _description_
+        i (int): _description_
+        j (int): _description_
+    """
+    aux = lista[i]
+    lista[i] = lista[j]
+    lista [j] = aux
+
+
 
 def ordenar_lista_doble(lista, campo1, campo2):
+    """ordena lista con doble parametro
+
+    Args:
+        lista (_type_): _description_
+        campo1 (_type_): Separa el campo
+        campo2 (_type_): campo a ordenar
+
+    Raises:
+        ValueError: _description_
+    """
     if isinstance(lista,list):
-            atributo = definir_campo(campo1)
-            atributo2 = definir_campo(campo2)
+            
             tam = len(lista)
             for i in range(tam - 1):
                 for j in range(i + 1, tam):
-                    if lista[i][atributo] == lista[j][atributo]:
-                        if lista[i][atributo2] > lista[j][atributo2]:
+                    if lista[i][campo1] == lista[j][campo1]:
+                        if lista[i][campo2] > lista[j][campo2]:
                             swap_lista(lista, i, j)  
-                    elif lista[i][atributo] > lista[j][atributo]:
+                    elif lista[i][campo1] > lista[j][campo1]:
                         swap_lista(lista,i,j)
     else:
         raise ValueError("No se ingreso ninguna lista")
+    
+    
+
+def mostrar_ciclistas_tabla(lista:list):
+    """muestras los ciclistas de la coleccion
+
+    Args:
+        lista (list): recibe una lista de diccionarios y los  muestra las claves del campo solicitado
+    """
+    if isinstance(lista,list):
+
+        tam = len(lista)
+        print("                      LISTA DE CICLISTAS")
+        print("ID     Nombre            Tipo        Tiempo")
+        print("------------------------------------------------------------------------")
+        for ciclista in lista:
+            print(f"{ciclista["id_bike"]}    {ciclista["nombre"]:15}    {ciclista["tipo"]:10}    {ciclista["tiempo"]}")
+    else:
+        raise ValueError("No se ingreso ninguna lista")
+
+
+def menu():
+    
+    print("   MENU DE OPCIONES")
+    print("1- Cargar CSV")
+    print("2- Imprimir lista de bicicletas")
+    print("3- Imprimir lista de bicicletas con  tiempos asignados")
+    print("4- Informar ganador")
+    print("5- filtrar por tipo de bicicleta")
+    print("6- Mostrar promedio por tipo")
+    print("7- Mostrar posiciones")
+    print("8- Guardar posiciones en un .JSON")
+    print("9- Salir")
+
+    return input("ingrese numero ")
+
+def pausar():
+    from os import system
+    system("pause")
+
+def salir():
+    salir = input("desea salir? \n (si/no) ")
+    return salir
+
+def limpiar_pantalla():
+    from os import system
+    system("cls")
